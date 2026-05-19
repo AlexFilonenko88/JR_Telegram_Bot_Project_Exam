@@ -1,5 +1,6 @@
 .env
 .idea/
+.idea/misc.xml
 .vscode/
 __pycache__/
 .venv
