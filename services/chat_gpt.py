@@ -25,7 +25,7 @@ class ChatGptService:
 
         return answer
 
-    async def generate_image(self, prompt: str) -> str:
+    async def generate_image(self, prompt: str):
         response = await self.client.images.generate(
             model="gpt-image-1",
             prompt=prompt,
