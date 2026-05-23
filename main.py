@@ -3,8 +3,10 @@ import logging
 import aiogram
 from aiogram import Bot, Dispatcher
 import config
-from handlers import weather, common
+from handlers import weather, common, random
 from proxy import proxy
+from services.chat_gpt import ChatGptService
+
 
 
 async def main():
@@ -17,8 +19,12 @@ async def main():
 
     dp = Dispatcher()
 
+    chat_gpt_service = ChatGptService(api_key=TOKEN_OPENAI)
+    dp['chat_gpt_service'] = chat_gpt_service
+
     dp.include_router(common.router)
-    dp.include_router(weather.router)
+    # dp.include_router(weather.router)
+    dp.include_router(random.router)
 
     await dp.start_polling(bot)
 
