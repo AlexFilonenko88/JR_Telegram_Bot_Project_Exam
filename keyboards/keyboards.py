@@ -1,5 +1,4 @@
-from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
-
+from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardMarkup, InlineKeyboardButton
 
 btn1 = KeyboardButton(text='/start')
 btn2 = KeyboardButton(text='Рандомный факт')
@@ -11,7 +10,6 @@ btn7 = KeyboardButton(text='/another_fact')
 btn8 = KeyboardButton(text='/exit')
 
 
-
 keyboards_1 = [
     [btn1, btn2, btn3],
     [btn4, btn5]
@@ -20,6 +18,20 @@ keyboards_2 = [
     [btn7, btn8],
 ]
 
+
 kb1 = ReplyKeyboardMarkup(keyboard=keyboards_1, resize_keyboard=True)
 kb2 = ReplyKeyboardMarkup(keyboard=keyboards_2, resize_keyboard=True)
 
+
+def personalities_keyboard():
+    return InlineKeyboardMarkup(inline_keyboard=[
+        [InlineKeyboardButton(text="Альберт Эйнштейн", callback_data="einstein")],
+        [InlineKeyboardButton(text="Стив Джобс", callback_data="jobs")],
+        [InlineKeyboardButton(text="Фрейд", callback_data="freud")],
+    ])
+
+
+def finish_keyboard():
+    return InlineKeyboardMarkup(inline_keyboard=[
+        [InlineKeyboardButton(text="Закончить", callback_data="finish")]
+    ])
