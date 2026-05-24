@@ -32,7 +32,6 @@ class ChatGptService:
             size="1024x1024"
         )
 
-        # URL картинки
         image_url = response.data[0].url
 
         return image_url

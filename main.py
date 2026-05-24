@@ -3,7 +3,7 @@ import logging
 import aiogram
 from aiogram import Bot, Dispatcher
 import config
-from handlers import weather, common, random, info, random_1
+from handlers import weather, common, random, gpt_interface, dialogue_famous_person
 from proxy import proxy
 from services.chat_gpt import ChatGptService
 
@@ -26,7 +26,8 @@ async def main():
 
     dp.include_router(common.router)
     dp.include_router(random.router)
-    dp.include_router(info.router)
+    dp.include_router(gpt_interface.router)
+    dp.include_router(dialogue_famous_person.router)
     dp.include_router(weather.router)
 
 

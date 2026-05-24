@@ -15,7 +15,7 @@ router = Router()
 @router.message(Command("random", "another_fact"))
 @router.message(F.text.contains("Рандомный факт"))
 async def random_answer(message: Message, chat_gpt_service: ChatGptService):
-    await message.answer(f'Ответ')
+    await message.answer(f'Ответ random')
 
     prompt_text = get_random_facts()
     image = await chat_gpt_service.generate_image(prompt_text)
