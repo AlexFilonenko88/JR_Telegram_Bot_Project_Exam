@@ -22,7 +22,6 @@ async def random_answer(message: Message, chat_gpt_service: ChatGptService):
     prompt_text = get_random_facts()
     text = await chat_gpt_service.ask(prompt_text,
                                       role_text='Ты полезный ассистент')
-    # image = await chat_gpt_service.generate_image(prompt_text)
 
     image_base64 = await chat_gpt_service.generate_image(prompt_text)
 
@@ -37,8 +36,7 @@ async def random_answer(message: Message, chat_gpt_service: ChatGptService):
 
     await message.answer(text=text)
     await message.answer_photo(photo=image,
-                            reply_markup=kb2)
-
+                               reply_markup=kb2)
 
 
 

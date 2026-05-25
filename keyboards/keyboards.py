@@ -25,9 +25,9 @@ kb2 = ReplyKeyboardMarkup(keyboard=keyboards_2, resize_keyboard=True)
 
 def personalities_keyboard():
     return InlineKeyboardMarkup(inline_keyboard=[
-        [InlineKeyboardButton(text="Альберт Эйнштейн", callback_data="einstein")],
-        [InlineKeyboardButton(text="Стив Джобс", callback_data="jobs")],
-        [InlineKeyboardButton(text="Фрейд", callback_data="freud")],
+        [InlineKeyboardButton(text="Альберт Эйнштейн", callback_data="Альберт Эйнштейн")],
+        [InlineKeyboardButton(text="Стив Джобс", callback_data="Стив Джобс")],
+        [InlineKeyboardButton(text="Фрейд", callback_data="Фрейд")],
     ])
 
 
