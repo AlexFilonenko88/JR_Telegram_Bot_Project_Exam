@@ -15,8 +15,8 @@ async def main():
 
     logging.basicConfig(level=logging.INFO)
 
-    bot = Bot(token=TOKEN_TG, session=proxy())
-    # bot = Bot(token=TOKEN_TG)
+    # bot = Bot(token=TOKEN_TG, session=proxy())
+    bot = Bot(token=TOKEN_TG)
 
     dp = Dispatcher()
 

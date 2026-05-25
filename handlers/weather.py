@@ -20,7 +20,7 @@ async def weather(message: Message, state:FSMContext):
     await message.answer('Напишите город, покажу погоду!')
     await state.set_state(WeatherState.waiting_for_city)
 
-@router.message()
+@router.message(WeatherState.waiting_for_city)
 async def weather_handler(message:Message, state: FSMContext):
     city = message.text
     weather_city = await get_weather(city)
@@ -28,15 +28,19 @@ async def weather_handler(message:Message, state: FSMContext):
                          reply_markup=kb1)
     await state.clear()
 
-# weather_1
-@router.message(Command('weather_1'))
-async def weather(message: Message):
-    await message.answer('Напишите город, покажу погоду!')
 
 
-@router.message()
-async def weather_handler(message:Message):
-    city = message.text
-    weather_city = await get_weather_1(city)
-    await message.answer(weather_city,
-                         reply_markup=kb1)
+
+
+# # weather_1
+# @router.message(Command('weather_1'))
+# async def weather(message: Message):
+#     await message.answer('Напишите город, покажу погоду!')
+
+
+# @router.message()
+# async def weather_handler(message:Message):
+#     city = message.text
+#     weather_city = await get_weather_1(city)
+#     await message.answer(weather_city,
+#                          reply_markup=kb1)

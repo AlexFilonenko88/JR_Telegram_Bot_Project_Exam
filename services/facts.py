@@ -26,4 +26,4 @@ facts = [
 
 
 def get_random_facts():
-    return random.choices(facts)
+    return random.choice(facts)
