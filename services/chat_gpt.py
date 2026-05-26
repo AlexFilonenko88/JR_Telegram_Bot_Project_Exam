@@ -6,8 +6,8 @@ class ChatGptService:
         self.client = AsyncOpenAI(api_key=api_key)
 
     async def ask(self, user_text: str, role_text: str):
-        if not role_text:
-            role_text = 'Ты полезный ассистент'
+        # if not role_text:
+        #     role_text = 'Ты полезный ассистент'
 
         response = await self.client.chat.completions.create(
             model = 'gpt-4o-mini',

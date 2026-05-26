@@ -15,7 +15,9 @@ router = Router()
 
 
 @router.message(Command("random", "another_fact"))
-@router.message(F.text.contains("Рандомный факт"))
+@router.message(F.text.contains("Рандомный факт") |
+                F.text.contains("Еще факт")
+                )
 async def random_answer(message: Message, chat_gpt_service: ChatGptService):
     await message.answer(f'Вы получите интерсныйт факт о планете земля')
 
@@ -41,6 +43,7 @@ async def random_answer(message: Message, chat_gpt_service: ChatGptService):
 
 
 @router.message(Command('exit'))
+@router.message(F.text.contains("Выход"))
 async def another_fact(message: Message):
     await message.answer('Выберите проект:',
                          reply_markup=kb1)

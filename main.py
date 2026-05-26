@@ -3,7 +3,7 @@ import logging
 import aiogram
 from aiogram import Bot, Dispatcher
 import config
-from handlers import weather, common, random, gpt_interface, dialogue_famous_person
+from handlers import weather, common, random, gpt_interface, dialogue_famous_person, translator, quiz
 from proxy import proxy
 from services.chat_gpt import ChatGptService
 
@@ -15,8 +15,8 @@ async def main():
 
     logging.basicConfig(level=logging.INFO)
 
-    bot = Bot(token=TOKEN_TG, session=proxy())
-    # bot = Bot(token=TOKEN_TG)
+    # bot = Bot(token=TOKEN_TG, session=proxy())
+    bot = Bot(token=TOKEN_TG)
 
     dp = Dispatcher()
 
@@ -28,6 +28,7 @@ async def main():
     dp.include_router(random.router)
     dp.include_router(gpt_interface.router)
     dp.include_router(dialogue_famous_person.router)
+    dp.include_router(translator.router)
     dp.include_router(weather.router)
 
 
