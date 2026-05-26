@@ -1,6 +1,5 @@
 from aiogram.types import Message
-
-from aiogram import Router
+from aiogram import Router, F
 from aiogram.filters.command import Command
 from utils.get_weather import get_weather
 from utils.get_weather_1 import get_weather_1
@@ -16,6 +15,7 @@ class WeatherState(StatesGroup):
 
 # weather
 @router.message(Command('weather'))
+@router.message(F.text.contains("Погода"))
 async def weather(message: Message, state:FSMContext):
     await message.answer('Напишите город, покажу погоду!')
     await state.set_state(WeatherState.waiting_for_city)

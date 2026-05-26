@@ -40,7 +40,7 @@ async def choose_personality(callback: CallbackQuery, state: FSMContext, chat_gp
     image_person_base64 = await chat_gpt_service.generate_image(callback.data)
 
     if not image_person_base64:
-        await message.answer("Ошибка: картинка не найдена ❌")
+        await callback.answer("Ошибка: картинка не найдена ❌")
         return
 
     image_bytes = base64.b64decode(image_person_base64)

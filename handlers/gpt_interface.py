@@ -1,6 +1,5 @@
 from aiogram.types import Message
-from aiogram import F
-from aiogram import Router
+from aiogram import Router, F
 from aiogram.filters.command import Command
 from services.chat_gpt import ChatGptService
 import base64
