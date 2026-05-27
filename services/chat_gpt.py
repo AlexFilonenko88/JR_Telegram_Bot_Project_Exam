@@ -1,4 +1,4 @@
-from openai import AsyncOpenAI
+from openai import AsyncOpenAI, BadRequestError
 
 
 class ChatGptService:
@@ -6,9 +6,6 @@ class ChatGptService:
         self.client = AsyncOpenAI(api_key=api_key)
 
     async def ask(self, user_text: str, role_text: str):
-        # if not role_text:
-        #     role_text = 'Ты полезный ассистент'
-
         response = await self.client.chat.completions.create(
             model = 'gpt-4o-mini',
             messages=[
@@ -28,11 +25,19 @@ class ChatGptService:
 
         return answer
 
-    async def generate_image(self, prompt: str):
-        response = await self.client.images.generate(
-            model="gpt-image-1",
-            prompt=prompt,
-            size="1024x1024"
-        )
 
-        return response.data[0].b64_json
+    async def generate_image(self, prompt: str):
+        try:
+            response = await self.client.images.generate(
+                model="gpt-image-1",
+                prompt=prompt,
+                size="1024x1024"
+            )
+
+            return response.data[0].b64_json
+
+        except BadRequestError as e:
+            if 'billing' in str(e):
+                print(f"Ошибка при генерации изображения: {e}")
+                return None
+            raise

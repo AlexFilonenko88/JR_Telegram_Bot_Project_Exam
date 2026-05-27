@@ -30,6 +30,7 @@ async def main():
     dp.include_router(dialogue_famous_person.router)
     dp.include_router(translator.router)
     dp.include_router(weather.router)
+    dp.include_router(quiz.router)
 
 
     await dp.start_polling(bot)

@@ -33,6 +33,8 @@ async def talk_person(message: Message, state: FSMContext, chat_gpt_service: Cha
 
 @router.callback_query(F.data.in_(PERSON_PROMPTS.keys()))
 async def choose_personality(callback: CallbackQuery, state: FSMContext, chat_gpt_service: ChatGptService):
+    await callback.answer("Загружаю...")  # ✅ СРАЗУ
+
     personality = callback.data
     await state.update_data(prompt=PERSON_PROMPTS[personality])
     await state.set_state(TalkState.talking)
@@ -47,16 +49,14 @@ async def choose_personality(callback: CallbackQuery, state: FSMContext, chat_gp
 
     image_person = BufferedInputFile(image_bytes, filename="image.png")
 
-    await callback.message.answer_photo(
-        image_person
-    )
+    await callback.message.answer_photo(image_person)
 
     await callback.message.answer(
         f"Отлично! Теперь ты разговариваешь с *{callback.data}*.\nПиши сообщение.",
         parse_mode="Markdown",
         reply_markup=finish_keyboard()
     )
-    await callback.answer()
+    # await callback.answer()
 
 
 
