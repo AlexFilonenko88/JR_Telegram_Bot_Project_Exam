@@ -20,12 +20,8 @@ class TalkState(StatesGroup):
 
 @router.message(Command('talk'))
 @router.message(F.text & F.text.contains("Диалог с известной личностью"))
-async def talk_person(message: Message, state: FSMContext, chat_gpt_service: ChatGptService):
+async def talk_person(message: Message, state: FSMContext):
     await state.set_state(TalkState.choosing)
-
-    # prompt_text = 'Einstein'
-    # image_person = await chat_gpt_service.generate_image(prompt_text)
-
     await message.answer(
         text="Выбери личность, с которой хочешь поговорить:",
         reply_markup=personalities_keyboard()
@@ -33,7 +29,7 @@ async def talk_person(message: Message, state: FSMContext, chat_gpt_service: Cha
 
 @router.callback_query(F.data.in_(PERSON_PROMPTS.keys()))
 async def choose_personality(callback: CallbackQuery, state: FSMContext, chat_gpt_service: ChatGptService):
-    await callback.answer("Загружаю...")  # ✅ СРАЗУ
+    await callback.answer("Загружаю...")
 
     personality = callback.data
     await state.update_data(prompt=PERSON_PROMPTS[personality])
