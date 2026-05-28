@@ -36,6 +36,7 @@ async def generate_image_handler(message: Message, state: FSMContext, chat_gpt_s
 
     if not image_base64:
         await message.answer("Ошибка генерации ❌")
+        await state.clear()
         return
 
     import base64
