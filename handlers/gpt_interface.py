@@ -25,7 +25,9 @@ async def cmd_gpt(message: Message, state: FSMContext):
 
 
 
-@router.message(GptState.waiting_for_prompt)
+@router.message(GptState.waiting_for_prompt,
+                F.text & ~F.text.startswith("/")
+                )
 async def generate_image_handler(message: Message, state: FSMContext, chat_gpt_service: ChatGptService):
 
     prompt = message.text

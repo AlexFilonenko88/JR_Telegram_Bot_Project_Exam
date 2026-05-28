@@ -2,40 +2,15 @@ from aiogram import Router, F
 from aiogram.types import Message, CallbackQuery, FSInputFile
 from aiogram.filters import Command
 from aiogram.utils.keyboard import InlineKeyboardBuilder
-
+from keyboards.keyboards import topics_keyboard, after_answer_keyboard
 from services.chat_gpt import ChatGptService
 
 router = Router()
 
-# -----------------------------
-# Хранилище состояния
-# -----------------------------
+
 user_quiz_state = {}
 
-QUIZ_TOPICS = ["История", "Наука", "Кино", "География"]
 
-
-# -----------------------------
-# Клавиатуры
-# -----------------------------
-def topics_keyboard():
-    kb = InlineKeyboardBuilder()
-    for topic in QUIZ_TOPICS:
-        kb.button(text=topic, callback_data=f"quiz_topic:{topic}")
-    return kb.as_markup()
-
-
-def after_answer_keyboard():
-    kb = InlineKeyboardBuilder()
-    kb.button(text="Ещё вопрос", callback_data="quiz_next")
-    kb.button(text="Сменить тему", callback_data="quiz_change")
-    kb.button(text="Закончить", callback_data="quiz_stop")
-    return kb.as_markup()
-
-
-# -----------------------------
-# /quiz
-# -----------------------------
 @router.message(Command("quiz"))
 @router.message(F.text.contains("Квиз"))
 async def quiz_start(message: Message):
@@ -52,9 +27,6 @@ async def quiz_start(message: Message):
     )
 
 
-# -----------------------------
-# Выбор темы
-# -----------------------------
 @router.callback_query(F.data.startswith("quiz_topic:"))
 async def quiz_choose_topic(callback: CallbackQuery, chat_gpt_service: ChatGptService):
     topic = callback.data.split(":")[1]
@@ -80,9 +52,6 @@ async def quiz_choose_topic(callback: CallbackQuery, chat_gpt_service: ChatGptSe
     await callback.answer()
 
 
-# -----------------------------
-# Ответ пользователя
-# -----------------------------
 @router.message(F.text & ~F.text.startswith("/"))
 async def quiz_answer(message: Message, chat_gpt_service: ChatGptService):
     user_id = message.from_user.id
@@ -129,9 +98,7 @@ async def quiz_answer(message: Message, chat_gpt_service: ChatGptService):
     state["question"] = None
 
 
-# -----------------------------
-# Следующий вопрос
-# -----------------------------
+
 @router.callback_query(F.data == "quiz_next")
 async def quiz_next(callback: CallbackQuery, chat_gpt_service: ChatGptService):
     user_id = callback.from_user.id
@@ -157,9 +124,6 @@ async def quiz_next(callback: CallbackQuery, chat_gpt_service: ChatGptService):
     await callback.answer()
 
 
-# -----------------------------
-# Смена темы
-# -----------------------------
 @router.callback_query(F.data == "quiz_change")
 async def quiz_change(callback: CallbackQuery):
     await callback.message.answer(
@@ -169,9 +133,6 @@ async def quiz_change(callback: CallbackQuery):
     await callback.answer()
 
 
-# -----------------------------
-# Завершение квиза
-# -----------------------------
 @router.callback_query(F.data == "quiz_stop")
 async def quiz_stop(callback: CallbackQuery):
     user_id = callback.from_user.id

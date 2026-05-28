@@ -1,6 +1,7 @@
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardMarkup, InlineKeyboardButton
+from aiogram.utils.keyboard import InlineKeyboardBuilder
 
-btn1 = KeyboardButton(text='/start')
+btn1 = KeyboardButton(text='Начать')
 btn2 = KeyboardButton(text='Рандомный факт')
 btn3 = KeyboardButton(text='ChatGPT интерфейс')
 btn4 = KeyboardButton(text='Диалог с известной личностью')
@@ -53,3 +54,21 @@ def get_actions_kb():
         ],
         resize_keyboard=True
     )
+
+
+QUIZ_TOPICS = ["История", "Наука", "Кино", "География"]
+
+
+def topics_keyboard():
+    kb = InlineKeyboardBuilder()
+    for topic in QUIZ_TOPICS:
+        kb.button(text=topic, callback_data=f"quiz_topic:{topic}")
+    return kb.as_markup()
+
+
+def after_answer_keyboard():
+    kb = InlineKeyboardBuilder()
+    kb.button(text="Ещё вопрос", callback_data="quiz_next")
+    kb.button(text="Сменить тему", callback_data="quiz_change")
+    kb.button(text="Закончить", callback_data="quiz_stop")
+    return kb.as_markup()
